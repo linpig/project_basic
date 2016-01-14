@@ -1,0 +1,67 @@
+/*************************************
+                            favorites
+**************************************/
+
+
+
+//清除浮動---------------------------------------------------
+%clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+
+//擴出區塊
+%fucking-out {
+    @media all and (min-width: 1025px) {
+        margin-left: -400px!important;
+        padding: 0px 400px!important;
+    }
+}
+
+//區塊顏色擴出page
+@mixin fucking-out($color) {
+    &:after {
+        @media all and (min-width: 1025px) {
+            content: "";
+            display: block;
+            background: $color;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            margin-left: -10000px;
+            padding: 0px 10000px;
+            z-index: -10;
+        }
+    }
+}
+
+
+//去除disply-inline-block間距(ul,li)
+@mixin inline-block-margin($li-font-size) {
+    ul {
+        font-size: 0px;
+        li {
+            font-size: $li-font-size;
+        }
+    }
+}
+
+
+// 截取文本text-overflow
+@mixin text-overflow($substract:0) {
+    //`$substract`单位为%
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100% - $substract;
+}

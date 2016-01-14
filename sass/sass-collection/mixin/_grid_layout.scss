@@ -1,0 +1,195 @@
+/*************************************
+                    gird     layout
+**************************************/
+
+
+/*
+$layout =  float / inline-block  (設定此grid是使用  float:left 還是 display:inline-block 的排列方式)
+$mb = true /false (選擇最後一列的grid是否有margin-bottom的樣式)
+$numberrow = 數字(整數)  (設定每一列gird的格數)
+$margin = 數字百分比 1% 2%....等等  (設定gird上下左右的margin)
+$margin-bottom =(這就不特別說了)有些特定的情況,必須要自己去設定margin-bottom的值,如不需要可直接省略
+*/
+
+@mixin grid($layout, $mb, $numberrow, $margin, $margin-bottom:null) {
+    width: ((100%-(($numberrow - 1)*$margin))/$numberrow);
+    margin-right: $margin;
+    &:nth-child(#{$numberrow}n) {
+        margin-right: 0;
+    }
+    @if $layout==float {
+        float: left
+    }
+    @else {
+        display: inline-block;
+        vertical-align: top;
+    }
+    @if $mb==true {
+        margin-bottom: ($margin*1);
+        margin-bottom: $margin-bottom;
+    }
+    @else if $mb==false {
+        &:nth-last-child(n+#{$numberrow+1}) {
+            margin-bottom: ($margin*1);
+            margin-bottom: $margin-bottom;
+        }
+    }
+}
+
+
+/*
+跟上方gird的使用方式一樣
+在特定情況使用:
+第一個grid的排列方式跟其他gird不相同時
+*/
+
+@mixin first-grid($layout, $mb, $numberrow, $margin, $margin-bottom:null) {
+    width: ((100%-(($numberrow - 1)*$margin))/$numberrow);
+    margin-right: $margin;
+    &:nth-child(#{$numberrow}n+1) {
+        margin-right: 0;
+    }
+    @if $layout==float {
+        float: left
+    }
+    @else {
+        display: inline-block;
+        vertical-align: top;
+    }
+    @if $mb==true {
+        margin-bottom: ($margin*1);
+        margin-bottom: $margin-bottom;
+    }
+    @else if $mb==false {
+        &:nth-last-child(n+#{$numberrow+1}) {
+            margin-bottom: ($margin*1);
+            margin-bottom: $margin-bottom;
+        }
+    }
+}
+
+
+/***************************************
+                     圖片,內容 float
+****************************************/
+
+//此區mixin必須要在特定的html架構下使用
+// <div class="style-wrapper">
+// <div class="image item">[field_image]</div>
+// <div class="content-wrapper item">
+// <div class="title">[title]</div>
+// <div class="create-date">[created]</div>
+// <div class="body">[body]</div>
+// <div class="taxonomy">[field_news_taxonomy]</div>
+// </div>
+//圖片至左
+
+/*
+$img-width = <div class="image item">的寬度
+$content-width =  <div class="content-wrapper item">的寬度
+$padding=  <div class="content-wrapper item">的padding的值
+*/
+
+@mixin style-float-img-left($img-width, $content-width, $padding) {
+    .style-wrapper {
+        position: relative;
+        @extend %clearfix;
+        .image {
+            float: left;
+            width: $img-width;
+            img {
+                float: left;
+            }
+        }
+        .content-wrapper {
+            float: right;
+            width: $content-width;
+            box-sizing: border-box;
+            padding: $padding;
+        }
+    }
+}
+
+//圖片至右
+
+/*
+$img-width = <div class="image item">的寬度
+$content-width =  <div class="content-wrapper item">的寬度
+$padding=  <div class="content-wrapper item">的padding的值
+*/
+
+@mixin style-float-img-right($img-width, $content-width, $padding) {
+    .style-wrapper {
+        position: relative;
+        @extend %clearfix;
+        .image {
+            float: right;
+            width: $img-width;
+            img {
+                float: left;
+            }
+        }
+        .content-wrapper {
+            float: left;
+            width: $content-width;
+            box-sizing: border-box;
+            padding: $padding;
+        }
+    }
+}
+
+//flex兩個區塊的排版
+
+/*
+$width1 = <div class="image item">的寬度
+$width2 =  <div class="content-wrapper item">的寬度
+
+
+$layout = row,row-reverse,column,column-reverse,initial,inherit (這兩個區塊的對齊方式)
+
+下面三項為 <div class="content-wrapper item">的排版設定:
+
+//縱軸對齊方式
+$x = flex-start,flex-end,space-between,space-around,stretch
+//橫軸對齊方式
+$y = flex-start,flex-end,space-between,space-around,stretch
+// 這就不特別說了
+$padding
+
+*/
+
+@mixin content-align($width1, $width2, $x, $y, $layout, $padding) {
+    .style-wrapper {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-flex-direction: $layout;
+        -ms-flex-direction: $layout;
+        flex-direction: $layout;
+        .item {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+        .image {
+            width: $width1;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+        .content-wrapper {
+            width: $width2;
+            -webkit-justify-content: $x;
+            justify-content: $x;
+            -webkit-align-items: $y;
+            align-items: $y;
+            box-sizing: border-box;
+            padding: $padding;
+        }
+    }
+}

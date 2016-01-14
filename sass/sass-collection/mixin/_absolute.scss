@@ -1,0 +1,57 @@
+/*************************************
+                    absolute
+**************************************/
+
+//絕對位置全屏--------------------------------------------------
+%ab-full-screen {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+
+
+
+
+@mixin absolute-align($x, $y,$padding:null) {
+    position: absolute;
+    box-sizing:border-box;
+    padding:$padding!important;
+    @if $x==center and $y==center {
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+    @else {
+        @if $x==center {
+            left: 50%;
+            -ms-transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+        @else if $x==left {
+            left: 0px;
+        }
+        @else if $x==right {
+            right: 0px;
+        }
+        @if $y==center {
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        @else if $y==top {
+            top: 0px;
+        }
+        @else if $y==bottom {
+            bottom: 0px;
+        }
+    }
+}
+
+

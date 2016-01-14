@@ -1,0 +1,45 @@
+/*************************************
+                             transform
+**************************************/
+
+//座標定位
+//example:@include transform-xy(x軸,y軸)
+@mixin transform-xy($trans-width,$trans-height) {
+    -ms-transform: translate($trans-width, $trans-height);
+    -webkit-transform: translate($trans-width, $trans-height);
+    transform: translate($trans-width, $trans-height);
+}
+
+
+// 三角形
+//example:@include triangle(寬度,三角形方向,顏色)
+@mixin triangle($width,$dir,$color) {
+    @if $dir==up {
+        width: 0px;
+        height: 0px;
+        border-left: $width/2 solid transparent;
+        border-right: $width/2 solid transparent;
+        border-bottom: $width/2 solid $color;
+    }
+    @else if $dir==down {
+        width: 0px;
+        height: 0px;
+        border-left: $width/2 solid transparent;
+        border-right: $width/2 solid transparent;
+        border-top: $width/2 solid $color;
+    }
+    @else if $dir==right {
+        width: 0px;
+        height: 0px;
+        border-top: $width/2 solid transparent;
+        border-bottom: $width/2 solid transparent;
+        border-left: $width/2 solid $color;
+    }
+    @else if $dir==left {
+        width: 0px;
+        height: 0px;
+        border-top: $width/2 solid transparent;
+        border-bottom: $width/2 solid transparent;
+        border-right: $width/2 solid $color;
+    }
+}

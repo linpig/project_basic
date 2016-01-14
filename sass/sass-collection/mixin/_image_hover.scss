@@ -1,0 +1,174 @@
+/*************************************
+                             image hover
+**************************************/
+
+@mixin fade-it($img, $shadow: #536) {
+    background: url('#{$img}'),
+    $shadow;
+    background-blend-mode: lighten;
+}
+
+//一道光掃過
+%shine {
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 0%;
+        height: 95%;
+        background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .4) 200%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .4) 200%);
+        -webkit-transform: skewX(-25deg);
+        transform: skewX(-25deg);
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+    &:hover:after {
+        width: 100%;
+        left: 150px;
+        background-color: rgba(255, 255, 255, 0);
+        -webkit-transition: all 0.6s ease-out;
+        -moz-transition: all 0.6s ease-out;
+        -ms-transition: all 0.6s ease-out;
+        -o-transition: all 0.6s ease-out;
+        transition: all 0.6s ease-out;
+    }
+}
+
+//霧化
+%tomization {
+    &:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: -webkit-radial-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 20%, hsla(0, 0%, 100%, 1));
+        background-image: radial-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 20%, hsla(0, 0%, 100%, 1));
+        -webkit-transition: opacity 0.5s;
+        transition: opacity 0.5s;
+        cursor: pointer;
+    }
+    &:hover:after {
+        opacity: 0;
+    }
+}
+
+//霧化 2
+%tomization_2 {
+    &:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: -webkit-radial-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 20%, hsla(0, 0%, 100%, 1));
+        background-image: radial-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0) 20%, hsla(0, 0%, 100%, 1));
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+    &:hover:after {
+        top: 50%;
+        right: 50%;
+        bottom: 50%;
+        left: 50%;
+    }
+}
+
+//霧化 3
+%tomization_3 {
+    &:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: -webkit-radial-gradient(hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0) 20%, hsla(0, 0%, 0%, 1));
+        background-image: radial-gradient(hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0) 20%, hsla(0, 0%, 0%, 1));
+        -webkit-transition: opacity 0.5s;
+        transition: opacity 0.5s;
+    }
+    &:hover:after {
+        opacity: 0;
+    }
+}
+
+%radius_line {
+    width: 220px;
+    height: 220px;
+    border: 10px solid #ecab18;
+    border-right-color: #1ad280;
+    border-bottom-color: #1ad280;
+    border-radius: 50%;
+    @include transition(all 0.8s ease-in-out);
+    &:hover .spinner {
+        @include transform(rotate(180deg));
+    }
+}
+
+//圓形縮放
+%round {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #444444;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    img {
+        position: relative;
+        z-index: 100;
+        @include transition(all 0.3s ease 0s);
+    }
+    &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #E42313;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        @include transform(scale(0));
+        @include transition(all 0.3s ease 0s);
+    }
+    &:hover {
+        img {
+            @include transform(scale(0.9));
+        }
+        &:before {
+            @include transform(scale(1));
+        }
+    }
+}
+
+// 放大旋轉
+//example:@include zoom-large(圖片放大的倍率)
+@mixin zoom-large($trans-size) {
+    position: relative;
+    overflow: hidden;
+    img {
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        display: -webkit-flex;
+        display: flex;
+    }
+    img:hover {
+        -webkit-transform: scale($trans-size);
+        transform: scale($trans-size);
+        display: -webkit-flex;
+        display: flex;
+    }
+}
