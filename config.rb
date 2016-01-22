@@ -3,7 +3,7 @@ require 'compass/import-once/activate'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "src/css"
+css_dir = "css"
 sass_dir = "sass"
 images_dir = "images"
 javascripts_dir = "js"
@@ -20,9 +20,9 @@ sass_options = {}
 
 preferred_syntax = :scss
 
-css_dir = "src/css" # by Compass.app 
+css_dir = "css" # by Compass.app 
 sass_dir = "sass" # by Compass.app 
-images_dir = "src/img" # by Compass.app 
+images_dir = "images" # by Compass.app 
 output_style = :compressed # by Compass.app 
 relative_assets = true # by Compass.app 
 line_comments = true # by Compass.app 
